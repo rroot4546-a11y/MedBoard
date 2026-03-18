@@ -9,6 +9,7 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:statusBarColor">@color/primary_dark</item>
         <item name="android:navigationBarColor">@color/primary</item>
+        <item name="android:forceDarkAllowed">false</item>
     </style>
 
     <style name="Theme.MedBoard.Splash" parent="Theme.MedBoard">

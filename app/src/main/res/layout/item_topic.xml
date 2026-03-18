@@ -7,6 +7,7 @@
     android:layout_margin="4dp"
     app:cardElevation="2dp"
     app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="#FFFFFF"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -30,14 +31,14 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/on_surface"/>
+                android:textColor="#212121"/>
 
             <TextView
                 android:id="@+id/tvSystemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:textColor="@color/text_secondary"
+                android:textColor="#616161"
                 android:layout_marginTop="2dp"/>
 
         </LinearLayout>

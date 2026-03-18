@@ -7,6 +7,7 @@
     android:layout_margin="6dp"
     app:cardElevation="3dp"
     app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="#FFFFFF"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground">
@@ -39,14 +40,14 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/on_surface"/>
+                android:textColor="#212121"/>
 
             <TextView
                 android:id="@+id/tvTopicCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
-                android:textColor="@color/text_secondary"
+                android:textColor="#616161"
                 android:layout_marginTop="2dp"/>
 
         </LinearLayout>
