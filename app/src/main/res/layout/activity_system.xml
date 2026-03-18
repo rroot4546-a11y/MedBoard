@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/bg_main">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="@drawable/gradient_header" android:orientation="vertical"
+        android:paddingHorizontal="20dp" android:paddingTop="40dp" android:paddingBottom="16dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+            <ImageButton android:id="@+id/btnBack" android:layout_width="36dp" android:layout_height="36dp"
+                android:src="@android:drawable/ic_menu_revert" android:background="?attr/selectableItemBackgroundBorderless" />
+            <TextView android:id="@+id/tvIcon" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="28sp" android:layout_marginStart="8dp" />
+            <TextView android:id="@+id/tvTitle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:textColor="@color/white" android:textSize="22sp" android:textStyle="bold" android:layout_marginStart="8dp" />
+        </LinearLayout>
+        <TextView android:id="@+id/tvSubtitle" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textColor="#BBFFFFFF" android:textSize="12sp" android:layout_marginTop="4dp" android:layout_marginStart="52dp" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvTopics"
+        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:padding="8dp" android:clipToPadding="false" />
+</LinearLayout>

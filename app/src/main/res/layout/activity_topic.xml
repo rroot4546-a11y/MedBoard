@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/bg_main">
+
+    <!-- Toolbar -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="@drawable/gradient_header" android:gravity="center_vertical"
+        android:paddingHorizontal="16dp" android:paddingTop="40dp" android:paddingBottom="14dp">
+        <ImageButton android:id="@+id/btnBack" android:layout_width="36dp" android:layout_height="36dp"
+            android:src="@android:drawable/ic_menu_revert" android:background="?attr/selectableItemBackgroundBorderless" />
+        <TextView android:id="@+id/tvTitle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold" android:layout_marginStart="8dp"
+            android:maxLines="2" android:ellipsize="end" />
+        <ImageButton android:id="@+id/btnBookmark" android:layout_width="36dp" android:layout_height="36dp"
+            android:src="@android:drawable/btn_star_big_off" android:background="?attr/selectableItemBackgroundBorderless" />
+    </LinearLayout>
+
+    <!-- Loading -->
+    <LinearLayout android:id="@+id/layoutLoading" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:gravity="center" android:orientation="vertical" android:visibility="gone">
+        <ProgressBar android:layout_width="48dp" android:layout_height="48dp" />
+        <TextView android:id="@+id/tvLoading" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Generating content from Harrison's &amp; Davidson's..." android:textSize="14sp"
+            android:textColor="@color/text_secondary" android:layout_marginTop="16dp" android:gravity="center" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="This may take 15-30 seconds" android:textSize="12sp"
+            android:textColor="@color/text_light" android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Content -->
+    <ScrollView android:id="@+id/scrollContent" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+        <LinearLayout android:id="@+id/layoutSections" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp" />
+    </ScrollView>
+</LinearLayout>
