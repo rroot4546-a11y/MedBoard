@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1B5E20</color>
+    <color name="primary_dark">#1A3A1A</color>
+    <color name="primary_variant">#2E7D32</color>
+    <color name="accent">#81C784</color>
+    <color name="accent_light">#A5D6A7</color>
+    <color name="white">#FFFFFF</color>
+    <color name="background">#F5F5F5</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_surface">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="board_note_bg">#FFF9C4</color>
+    <color name="board_note_border">#F9A825</color>
+    <color name="update_bg">#E3F2FD</color>
+    <color name="update_border">#1565C0</color>
+    <color name="reference_bg">#F5F5F5</color>
+    <color name="reference_border">#9E9E9E</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="cardio_color">#E53935</color>
+    <color name="respiratory_color">#1E88E5</color>
+    <color name="gi_color">#FB8C00</color>
+    <color name="nephro_color">#8E24AA</color>
+    <color name="endo_color">#00897B</color>
+    <color name="rheum_color">#F4511E</color>
+    <color name="heme_color">#D81B60</color>
+    <color name="id_color">#6D4C41</color>
+    <color name="neuro_color">#3949AB</color>
+    <color name="onco_color">#546E7A</color>
+    <color name="derm_color">#7B1FA2</color>
+    <color name="critical_color">#C62828</color>
+    <color name="geri_color">#558B2F</color>
+    <color name="general_color">#00695C</color>
+</resources>
