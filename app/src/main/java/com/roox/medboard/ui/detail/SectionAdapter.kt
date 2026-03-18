@@ -89,8 +89,74 @@ class SectionAdapter(
     }
 
     private fun cleanContent(content: String): String {
-        return content.replace(Regex("===\\s*[A-Z ]+\\s*==="), "")
-            .trim()
+        var cleaned = content.replace(Regex("===\\s*[A-Z &()/-]+\\s*==="), "").trim()
+        cleaned = fixMarkdownTables(cleaned)
+        return cleaned
+    }
+
+    /**
+     * Fix malformed markdown tables where separator row is missing.
+     * Input:  | Col1 | Col2 |
+     *         |------|------|  (may or may not be present)
+     *         | val1 | val2 |
+     *
+     * Also handles tables where the separator uses dashes inside the pipe content.
+     */
+    private fun fixMarkdownTables(text: String): String {
+        val lines = text.lines()
+        val result = mutableListOf<String>()
+        var i = 0
+
+        while (i < lines.size) {
+            val line = lines[i]
+
+            // Detect a table header row: starts and ends with |, contains multiple |
+            if (isTableRow(line)) {
+                val tableLines = mutableListOf<String>()
+                tableLines.add(line)
+
+                // Peek next line
+                val nextLine = if (i + 1 < lines.size) lines[i + 1] else ""
+
+                if (isSeparatorRow(nextLine)) {
+                    // Already has separator — collect table normally
+                    tableLines.add(nextLine)
+                    i += 2
+                    while (i < lines.size && isTableRow(lines[i])) {
+                        tableLines.add(lines[i])
+                        i++
+                    }
+                } else {
+                    // Missing separator — inject one
+                    val colCount = line.split("|").filter { it.isNotBlank() }.size
+                    val separator = "| " + List(colCount) { "---" }.joinToString(" | ") + " |"
+                    tableLines.add(separator)
+                    i++
+                    while (i < lines.size && isTableRow(lines[i])) {
+                        tableLines.add(lines[i])
+                        i++
+                    }
+                }
+
+                result.addAll(tableLines)
+                result.add("") // blank line after table
+            } else {
+                result.add(line)
+                i++
+            }
+        }
+
+        return result.joinToString("\n")
+    }
+
+    private fun isTableRow(line: String): Boolean {
+        val trimmed = line.trim()
+        return trimmed.startsWith("|") && trimmed.endsWith("|") && trimmed.count { it == '|' } >= 3
+    }
+
+    private fun isSeparatorRow(line: String): Boolean {
+        val trimmed = line.trim()
+        return trimmed.startsWith("|") && trimmed.contains("---") && trimmed.contains("|")
     }
 
     class TextViewHolder(val binding: ItemSectionTextBinding) : RecyclerView.ViewHolder(binding.root)

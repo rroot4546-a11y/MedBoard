@@ -9,6 +9,8 @@ import com.roox.medboard.R
 import com.roox.medboard.databinding.ActivityTopicDetailBinding
 import com.roox.medboard.viewmodel.DetailViewModel
 import io.noties.markwon.Markwon
+import io.noties.markwon.ext.tables.TablePlugin
+import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
 
 class TopicDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTopicDetailBinding
@@ -24,7 +26,10 @@ class TopicDetailActivity : AppCompatActivity() {
 
         val topicId = intent.getStringExtra("TOPIC_ID") ?: return finish()
 
-        val markwon = Markwon.create(this)
+        val markwon = Markwon.builder(this)
+            .usePlugin(TablePlugin.create(this))
+            .usePlugin(StrikethroughPlugin.create())
+            .build()
         sectionAdapter = SectionAdapter(markwon)
 
         binding.rvSections.apply {
