@@ -13,15 +13,22 @@ class ContentRepository(
 ) {
     private val gson = Gson()
 
-    // Cache the full JSON in memory to avoid repeated file reads
-    private var cachedJsonObject: JsonObject? = null
+    companion object {
+        // Static cache shared across all instances - loaded only once
+        @Volatile
+        private var cachedJsonObject: JsonObject? = null
+        private val cacheLock = Any()
+    }
 
     private fun getJsonObject(): JsonObject {
-        if (cachedJsonObject == null) {
-            val json = context.assets.open("medboard_content.json").bufferedReader().readText()
-            cachedJsonObject = gson.fromJson(json, JsonObject::class.java)
+        return cachedJsonObject ?: synchronized(cacheLock) {
+            cachedJsonObject ?: run {
+                val json = context.assets.open("medboard_content.json").bufferedReader().readText()
+                val parsed = Gson().fromJson(json, JsonObject::class.java)
+                cachedJsonObject = parsed
+                parsed
+            }
         }
-        return cachedJsonObject!!
     }
 
     suspend fun loadContentIfNeeded(): Boolean = withContext(Dispatchers.IO) {
