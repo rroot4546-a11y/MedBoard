@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [TopicEntity::class], version = 1, exportSchema = false)
+@Database(entities = [TopicEntity::class], version = 3, exportSchema = false)
 abstract class MedBoardDatabase : RoomDatabase() {
     abstract fun topicDao(): TopicDao
 
@@ -19,7 +19,9 @@ abstract class MedBoardDatabase : RoomDatabase() {
                     context.applicationContext,
                     MedBoardDatabase::class.java,
                     "medboard_database"
-                ).build()
+                )
+                .fallbackToDestructiveMigration() // Wipe & rebuild DB on version upgrade
+                .build()
                 INSTANCE = instance
                 instance
             }
