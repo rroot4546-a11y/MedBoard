@@ -24,7 +24,8 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
             val topic = dao.getTopicById(topicId)
             _topic.value = topic
             topic?.let {
-                _sections.value = repository.getSectionsFromJson(it.sectionsJson)
+                // Load sections directly from assets to avoid SQLite size limits
+                _sections.value = repository.getSectionsForTopic(topicId)
             }
         }
     }
