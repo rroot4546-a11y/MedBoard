@@ -13,6 +13,17 @@ class ContentRepository(
 ) {
     private val gson = Gson()
 
+    // Cache the full JSON in memory to avoid repeated file reads
+    private var cachedJsonObject: JsonObject? = null
+
+    private fun getJsonObject(): JsonObject {
+        if (cachedJsonObject == null) {
+            val json = context.assets.open("medboard_content.json").bufferedReader().readText()
+            cachedJsonObject = gson.fromJson(json, JsonObject::class.java)
+        }
+        return cachedJsonObject!!
+    }
+
     suspend fun loadContentIfNeeded(): Boolean = withContext(Dispatchers.IO) {
         val count = topicDao.getCount()
         if (count > 0) return@withContext false
@@ -22,9 +33,7 @@ class ContentRepository(
     }
 
     private suspend fun loadFromAssets() = withContext(Dispatchers.IO) {
-        val json = context.assets.open("medboard_content.json").bufferedReader().readText()
-        val jsonObject = gson.fromJson(json, JsonObject::class.java)
-
+        val jsonObject = getJsonObject()
         val topics = mutableListOf<TopicEntity>()
 
         for ((_, value) in jsonObject.entrySet()) {
@@ -32,19 +41,31 @@ class ContentRepository(
             val id = obj.get("id").asString
             val systemId = obj.get("systemId").asString
             val title = obj.get("title").asString
-            val sectionsJson = obj.get("sections").toString()
-
+            // Store only topic id reference, not full sections JSON
             topics.add(
                 TopicEntity(
                     id = id,
                     systemId = systemId,
                     title = title,
-                    sectionsJson = sectionsJson
+                    sectionsJson = "" // sections loaded directly from assets
                 )
             )
         }
 
         topicDao.insertAll(topics)
+    }
+
+    // Load sections directly from assets JSON (bypasses SQLite size limits)
+    suspend fun getSectionsForTopic(topicId: String): List<Section> = withContext(Dispatchers.IO) {
+        try {
+            val jsonObject = getJsonObject()
+            val topicObj = jsonObject.get(topicId)?.asJsonObject ?: return@withContext emptyList()
+            val sectionsJson = topicObj.get("sections")?.toString() ?: return@withContext emptyList()
+            val type = object : TypeToken<List<Section>>() {}.type
+            gson.fromJson(sectionsJson, type) ?: emptyList()
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 
     fun getSectionsFromJson(sectionsJson: String): List<Section> {
